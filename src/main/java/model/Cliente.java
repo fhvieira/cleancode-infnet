@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Optional;
+
 public class Cliente {
     private String nome;
 

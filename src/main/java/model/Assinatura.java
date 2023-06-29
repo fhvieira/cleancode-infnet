@@ -28,6 +28,13 @@ public class Assinatura {
         this(mensalidade, inicio, null, cliente);
     }
 
+    public Assinatura(BigDecimal mensalidade, LocalDateTime inicio, Cliente cliente, boolean pagamentoAtrasado) {
+        this.mensalidade = mensalidade;
+        this.inicio = inicio;
+        this.cliente = cliente;
+        this.pagamentoAtrasado = pagamentoAtrasado;
+    }
+
     public BigDecimal getMensalidade() {
         return mensalidade;
     }

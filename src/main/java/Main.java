@@ -18,17 +18,7 @@ public class Main {
         Cliente johnDoe = new Cliente("John Doe");
         Cliente janeSmith = new Cliente("Jane Smith");
         Cliente emilyBrown = new Cliente("Emily Brown");
-
-        Produto musica = new Produto("Musica", Path.of("musica.mp3"), BigDecimal.valueOf(100));
-        Produto video = new Produto("Video", Path.of("video.mp4"), BigDecimal.valueOf(150));
-        Produto imagem = new Produto("Imagem", Path.of("imagem.jpg"), BigDecimal.valueOf(120));
-
-        Pagamento pagamentoHoje = new Pagamento(List.of(musica, video), LocalDateTime.now(), johnDoe);
-        Pagamento pagamentoOntem = new Pagamento(List.of(imagem), LocalDateTime.now().minusDays(1), janeSmith);
-        Pagamento pagamentoMesPassado = new Pagamento(List.of(video, imagem),
-                LocalDateTime.now().minusMonths(1), emilyBrown);
-
-        List<Pagamento> pagamentos = List.of(pagamentoOntem, pagamentoHoje, pagamentoMesPassado);
+        Cliente sarahWilson = new Cliente("Sarah Wilson");
 
         Assinatura assinaturaJohn = new Assinatura(BigDecimal.valueOf(99.98),
                 LocalDateTime.now().minusMonths(6), johnDoe);
@@ -39,7 +29,23 @@ public class Main {
         Assinatura assinaturaEmily = new Assinatura(BigDecimal.valueOf(99.98),
                 LocalDateTime.now().minusMonths(3), LocalDateTime.now(), emilyBrown);
 
+        Assinatura assinaturaSaraWilson = new Assinatura(BigDecimal.valueOf(99.98),
+                LocalDateTime.now().minusMonths(3), emilyBrown, true);
+
         List<Assinatura> assinaturas = List.of(assinaturaJohn, assinaturaJane, assinaturaEmily);
+
+        Produto musica = new Produto("Musica", Path.of("musica.mp3"), BigDecimal.valueOf(100));
+        Produto video = new Produto("Video", Path.of("video.mp4"), BigDecimal.valueOf(150));
+        Produto imagem = new Produto("Imagem", Path.of("imagem.jpg"), BigDecimal.valueOf(120));
+
+        Pagamento pagamentoHoje = new Pagamento(List.of(musica, video), LocalDateTime.now(), assinaturaJohn);
+        Pagamento pagamentoOntem = new Pagamento(List.of(imagem), LocalDateTime.now().minusDays(1), assinaturaJane);
+        Pagamento pagamentoMesPassado = new Pagamento(List.of(video, imagem),
+                LocalDateTime.now().minusMonths(1), assinaturaEmily);
+
+        List<Pagamento> pagamentos = List.of(pagamentoOntem, pagamentoHoje, pagamentoMesPassado);
+
+        new Pagamento(List.of(musica, video), LocalDateTime.now(), assinaturaSaraWilson);
 
         ordernarEImprimirPagamentoPorDataDeCompra(pagamentos);
         calcularEImprimirASomaDosPagamentos(pagamentoHoje);
