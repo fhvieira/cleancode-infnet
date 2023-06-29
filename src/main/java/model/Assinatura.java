@@ -21,7 +21,6 @@ public class Assinatura {
         this.inicio = inicio;
         this.fim = fim;
         this.cliente = cliente;
-        this.pagamentoAtrasado = false;
     }
 
     public Assinatura(BigDecimal mensalidade, LocalDateTime inicio, Cliente cliente) {
@@ -29,9 +28,7 @@ public class Assinatura {
     }
 
     public Assinatura(BigDecimal mensalidade, LocalDateTime inicio, Cliente cliente, boolean pagamentoAtrasado) {
-        this.mensalidade = mensalidade;
-        this.inicio = inicio;
-        this.cliente = cliente;
+        this(mensalidade, inicio, null, cliente);
         this.pagamentoAtrasado = pagamentoAtrasado;
     }
 

@@ -30,7 +30,7 @@ public class Main {
                 LocalDateTime.now().minusMonths(3), LocalDateTime.now(), emilyBrown);
 
         Assinatura assinaturaSaraWilson = new Assinatura(BigDecimal.valueOf(99.98),
-                LocalDateTime.now().minusMonths(3), emilyBrown, true);
+                LocalDateTime.now().minusMonths(3), sarahWilson, true);
 
         List<Assinatura> assinaturas = List.of(assinaturaJohn, assinaturaJane, assinaturaEmily);
 
