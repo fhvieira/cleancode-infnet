@@ -1,13 +1,12 @@
-import model.Assinatura;
-import model.Cliente;
-import model.Pagamento;
-import model.Produto;
+import jdk.jshell.spi.ExecutionControlProvider;
+import model.*;
 
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -31,14 +30,14 @@ public class Main {
 
         List<Pagamento> pagamentos = List.of(pagamentoOntem, pagamentoHoje, pagamentoMesPassado);
 
-        Assinatura assinaturaJohn = new Assinatura(new BigDecimal("99.98"),
-                LocalDate.now().minusMonths(6), johnDoe);
+        Assinatura assinaturaJohn = new Assinatura(BigDecimal.valueOf(99.98),
+                LocalDateTime.now().minusMonths(6), johnDoe);
 
-        Assinatura assinaturaJane = new Assinatura(new BigDecimal("99.98"),
-                LocalDate.now().minusMonths(4), LocalDate.now(), janeSmith);
+        Assinatura assinaturaJane = new Assinatura(BigDecimal.valueOf(99.98),
+                LocalDateTime.now().minusMonths(4), LocalDateTime.now(), janeSmith);
 
-        Assinatura assinaturaEmily = new Assinatura(new BigDecimal("99.98"),
-                LocalDate.now().minusMonths(3), LocalDate.now(), emilyBrown);
+        Assinatura assinaturaEmily = new Assinatura(BigDecimal.valueOf(99.98),
+                LocalDateTime.now().minusMonths(3), LocalDateTime.now(), emilyBrown);
 
         List<Assinatura> assinaturas = List.of(assinaturaJohn, assinaturaJane, assinaturaEmily);
 
@@ -127,23 +126,18 @@ public class Main {
     }
 
     private static void imprimirTempoEmMesesDeAssinatuvaAtiva(Assinatura assinaturaAtiva) {
-        if (assinaturaAtiva.getEnd() != null) {
-            System.out.println("10 - A assinatura não está mais ativa.");
-            return;
-        }
-        long mesesAtivos = assinaturaAtiva.getBegin().until(LocalDate.now()).toTotalMonths();
-        System.out.println("10 - Tempo em meses da assinatura ainda ativa: " + mesesAtivos);
+        assinaturaAtiva.getFim().ifPresent(d -> System.out.println("10 - A assinatura não está mais ativa."));
+
+        System.out.println("10 - Tempo em meses da assinatura ainda ativa: " +
+                assinaturaAtiva.getQtdeMesesAssinatura());
     }
 
     private static void imprimirTempoDeAssinaturas(List<Assinatura> assinaturas) {
         System.out.println("11 - Tempo de meses entre o início e o fim das assinaturas:");
 
-        assinaturas.forEach(assinatura -> {
-            if (assinatura.getEnd() != null) {
-                long meses = assinatura.getBegin().until(assinatura.getEnd()).toTotalMonths();
-                System.out.println("Assinatura do cliente " + assinatura.getCliente().getNome()
-                        + ": " + meses + " meses");
-            }
+        assinaturas.forEach(assinatura -> {System.out.println("Assinatura do cliente " +
+                assinatura.getCliente().getNome() + ": " +
+                assinatura.getQtdeMesesAssinatura() + " meses");
         });
     }
 
@@ -151,8 +145,8 @@ public class Main {
         System.out.println("12 - Valor pago em cada assinatura até o momento:");
 
         assinaturas.forEach(assinatura -> {
-            BigDecimal valorPago = assinatura.getMensalidade()
-                    .multiply(BigDecimal.valueOf(assinatura.getBegin().until(LocalDate.now()).toTotalMonths() + 1));
+            BigDecimal valorPago = assinatura.getMensalidade().multiply(BigDecimal.valueOf(
+                    assinatura.getQtdeMesesAssinatura() + 1));
 
             System.out.println("Assinatura do cliente " + assinatura.getCliente().getNome() + ": " + valorPago);
         });

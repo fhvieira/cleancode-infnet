@@ -2,40 +2,74 @@ package model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
+
+import static model.TipoAssinatura.*;
 
 public class Assinatura {
     private BigDecimal mensalidade;
-    private LocalDate begin;
-    private LocalDate end;
+    private LocalDateTime inicio;
+    private LocalDateTime fim;
     private Cliente cliente;
+    private TipoAssinatura tipoAssinatura;
+    private boolean pagamentoAtrasado;
 
-    public Assinatura(BigDecimal mensalidade, LocalDate begin, LocalDate end, Cliente cliente) {
+    public Assinatura(BigDecimal mensalidade, LocalDateTime inicio, LocalDateTime fim, Cliente cliente) {
         this.mensalidade = mensalidade;
-        this.begin = begin;
-        this.end = end;
+        this.inicio = inicio;
+        this.fim = fim;
         this.cliente = cliente;
+        this.pagamentoAtrasado = false;
     }
 
-    public Assinatura(BigDecimal mensalidade, LocalDate begin, Cliente cliente) {
-        this.mensalidade = mensalidade;
-        this.begin = begin;
-        this.cliente = cliente;
+    public Assinatura(BigDecimal mensalidade, LocalDateTime inicio, Cliente cliente) {
+        this(mensalidade, inicio, null, cliente);
     }
 
     public BigDecimal getMensalidade() {
         return mensalidade;
     }
 
-    public LocalDate getBegin() {
-        return begin;
+    public LocalDateTime getInicio() {
+        return inicio;
     }
 
-    public LocalDate getEnd() {
-        return end;
+    public Optional<LocalDateTime> getFim() {
+        return Optional.ofNullable(fim);
     }
 
     public Cliente getCliente() {
         return cliente;
     }
+
+    public TipoAssinatura getTipoAssinatura() {
+        return tipoAssinatura;
+    }
+
+    public boolean isPagamentoAtrasado() {
+        return pagamentoAtrasado;
+    }
+
+    public LocalDateTime getFimOrElseNow() {
+        return getFim().orElse(LocalDateTime.now());
+    }
+
+    public int getQtdeMesesAssinatura() {
+        return (int)ChronoUnit.MONTHS.between(inicio, getFimOrElseNow());
+    }
+
+    public BigDecimal getTaxa() {
+        return mensalidade.multiply(BigDecimal.valueOf(this.getQtdeMesesAssinatura()));
+    }
+
+    public BigDecimal calcularTaxa() {
+        return switch(this.tipoAssinatura) {
+            case ANUAL -> BigDecimal.ZERO;
+            case SEMESTRAL -> getTaxa().multiply(BigDecimal.valueOf(0.03));
+            case TRIMESTRAL -> getTaxa().multiply(BigDecimal.valueOf(0.05));
+        };
+    }
+
 }
