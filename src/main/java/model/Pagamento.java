@@ -41,4 +41,11 @@ public class Pagamento {
                 ", cliente=" + cliente +
                 '}';
     }
+
+    public double calcularSomaDoValorDosProdutos() {
+        return getProdutos().stream()
+                .mapToDouble(p -> p.getPreco().doubleValue())
+                .sum();
+    }
+
 }
