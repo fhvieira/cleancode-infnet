@@ -11,24 +11,25 @@ import static model.TipoAssinatura.*;
 public class Assinatura {
     private BigDecimal mensalidade;
     private LocalDateTime inicio;
-    private LocalDateTime fim;
+    private Optional<LocalDateTime> fim;
     private Cliente cliente;
     private TipoAssinatura tipoAssinatura;
     private boolean pagamentoAtrasado;
 
     public Assinatura(BigDecimal mensalidade, LocalDateTime inicio, LocalDateTime fim, Cliente cliente) {
-        this.mensalidade = mensalidade;
-        this.inicio = inicio;
-        this.fim = fim;
-        this.cliente = cliente;
+        this(mensalidade, inicio, cliente);
+        this.fim = Optional.of(fim);
     }
 
     public Assinatura(BigDecimal mensalidade, LocalDateTime inicio, Cliente cliente) {
-        this(mensalidade, inicio, null, cliente);
+        this.mensalidade = mensalidade;
+        this.inicio = inicio;
+        this.fim = Optional.empty();
+        this.cliente = cliente;
     }
 
     public Assinatura(BigDecimal mensalidade, LocalDateTime inicio, Cliente cliente, boolean pagamentoAtrasado) {
-        this(mensalidade, inicio, null, cliente);
+        this(mensalidade, inicio, cliente);
         this.pagamentoAtrasado = pagamentoAtrasado;
     }
 
@@ -41,7 +42,7 @@ public class Assinatura {
     }
 
     public Optional<LocalDateTime> getFim() {
-        return Optional.ofNullable(fim);
+        return fim;
     }
 
     public Cliente getCliente() {
