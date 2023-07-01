@@ -16,20 +16,13 @@ public class Assinatura {
     private TipoAssinatura tipoAssinatura;
     private boolean pagamentoAtrasado;
 
-    public Assinatura(BigDecimal mensalidade, LocalDateTime inicio, LocalDateTime fim, Cliente cliente) {
-        this.mensalidade = mensalidade;
-        this.inicio = inicio;
-        this.fim = fim;
-        this.cliente = cliente;
-    }
-
-    public Assinatura(BigDecimal mensalidade, LocalDateTime inicio, Cliente cliente) {
-        this(mensalidade, inicio, null, cliente);
-    }
-
-    public Assinatura(BigDecimal mensalidade, LocalDateTime inicio, Cliente cliente, boolean pagamentoAtrasado) {
-        this(mensalidade, inicio, null, cliente);
-        this.pagamentoAtrasado = pagamentoAtrasado;
+    private Assinatura(Builder builder) {
+        this.mensalidade = builder.mensalidade;
+        this.inicio = builder.inicio;
+        this.fim = builder.fim;
+        this.cliente = builder.cliente;
+        this.tipoAssinatura = builder.tipoAssinatura;
+        this.pagamentoAtrasado = builder.pagamentoAtrasado;
     }
 
     public BigDecimal getMensalidade() {
@@ -74,6 +67,49 @@ public class Assinatura {
             case SEMESTRAL -> getTaxa().multiply(BigDecimal.valueOf(0.03));
             case TRIMESTRAL -> getTaxa().multiply(BigDecimal.valueOf(0.05));
         };
+    }
+
+    public static class Builder {
+        private BigDecimal mensalidade;
+        private LocalDateTime inicio;
+        private LocalDateTime fim;
+        private Cliente cliente;
+        private TipoAssinatura tipoAssinatura;
+        private boolean pagamentoAtrasado;
+
+        public Builder mensalidade(BigDecimal mensalidade) {
+            this.mensalidade = mensalidade;
+            return this;
+        }
+
+        public Builder inicio(LocalDateTime inicio) {
+            this.inicio = inicio;
+            return this;
+        }
+
+        public Builder fim(LocalDateTime fim) {
+            this.fim = fim;
+            return this;
+        }
+
+        public Builder cliente(Cliente cliente) {
+            this.cliente = cliente;
+            return this;
+        }
+
+        public Builder tipoAssinatura(TipoAssinatura tipoAssinatura) {
+            this.tipoAssinatura = tipoAssinatura;
+            return this;
+        }
+
+        public Builder pagamentoAtrasado(boolean pagamentoAtrasado) {
+            this.pagamentoAtrasado = pagamentoAtrasado;
+            return this;
+        }
+
+        public Assinatura build() {
+            return new Assinatura(this);
+        }
     }
 
 }

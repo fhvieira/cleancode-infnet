@@ -26,19 +26,35 @@ public class Main {
         Cliente emilyBrown = new Cliente("Emily Brown");
         Cliente sarahWilson = new Cliente("Sarah Wilson");
 
-        Assinatura assinaturaJohn = new Assinatura(BigDecimal.valueOf(99.98),
-                LocalDateTime.now().minusMonths(6), johnDoe);
+        Assinatura assinaturaJohn = new Assinatura.Builder()
+                .mensalidade(BigDecimal.valueOf(99.98))
+                .inicio(LocalDateTime.now().minusMonths(6))
+                .cliente(johnDoe)
+                .build();
 
-        Assinatura assinaturaJane = new Assinatura(BigDecimal.valueOf(99.98),
-                LocalDateTime.now().minusMonths(4), LocalDateTime.now(), janeSmith);
+        Assinatura assinaturaJane = new Assinatura.Builder()
+                .mensalidade(BigDecimal.valueOf(99.98))
+                .inicio(LocalDateTime.now().minusMonths(4))
+                .fim(LocalDateTime.now())
+                .cliente(janeSmith)
+                .build();
 
-        Assinatura assinaturaEmily = new Assinatura(BigDecimal.valueOf(99.98),
-                LocalDateTime.now().minusMonths(3), LocalDateTime.now(), emilyBrown);
+        Assinatura assinaturaEmily = new Assinatura.Builder()
+                .mensalidade(BigDecimal.valueOf(99.98))
+                .inicio(LocalDateTime.now().minusMonths(3))
+                .fim(LocalDateTime.now())
+                .cliente(emilyBrown)
+                .build();
 
-        Assinatura assinaturaSaraWilson = new Assinatura(BigDecimal.valueOf(99.98),
-                LocalDateTime.now().minusMonths(3), sarahWilson, true);
+        Assinatura assinaturaSaraWilson = new Assinatura.Builder()
+                .mensalidade(BigDecimal.valueOf(99.98))
+                .inicio(LocalDateTime.now().minusMonths(3))
+                .cliente(sarahWilson)
+                .pagamentoAtrasado(true)
+                .build();
 
         List<Assinatura> assinaturas = List.of(assinaturaJohn, assinaturaJane, assinaturaEmily);
+
 
         Produto musica = new Produto("Musica", Path.of("musica.mp3"), BigDecimal.valueOf(100));
         Produto video = new Produto("Video", Path.of("video.mp4"), BigDecimal.valueOf(150));
