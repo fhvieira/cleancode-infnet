@@ -1,0 +1,9 @@
+Main.class
+model/Assinatura.class
+model/Pagamento.class
+model/Cliente.class
+service/PagamentoService.class
+model/Produto.class
+model/TipoAssinatura.class
+service/AssinaturaService.class
+model/Assinatura$1.class
