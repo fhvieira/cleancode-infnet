@@ -17,18 +17,16 @@ public class AssinaturaService {
     public void imprimirTempoDeAssinaturas(List<Assinatura> assinaturas) {
         System.out.println("11 - Tempo de meses entre o início e o fim das assinaturas:");
 
-        assinaturas.forEach(assinatura -> {System.out.println("Assinatura do cliente " +
-                assinatura.getCliente().getNome() + ": " +
-                assinatura.getQtdeMesesAssinatura() + " meses");
-        });
+        assinaturas.forEach(assinatura -> System.out.println("Assinatura do cliente " +
+                assinatura.getCliente().getNome() + ": " + assinatura.getQtdeMesesAssinatura() + " meses"));
     }
 
-    public void cacularValorPagoEmCadaAssinatura(List<Assinatura> assinaturas) {
+    public void calcularValorPagoEmCadaAssinatura(List<Assinatura> assinaturas) {
         System.out.println("12 - Valor pago em cada assinatura até o momento:");
 
         assinaturas.forEach(assinatura -> {
             BigDecimal valorPago = assinatura.getMensalidade().multiply(BigDecimal.valueOf(
-                    assinatura.getQtdeMesesAssinatura() + 1));
+                    assinatura.getQtdeMesesAssinatura() + 1L));
 
             System.out.println("Assinatura do cliente " + assinatura.getCliente().getNome() + ": " + valorPago);
         });

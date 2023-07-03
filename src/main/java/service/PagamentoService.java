@@ -22,7 +22,7 @@ public class PagamentoService {
                 .forEach(System.out::println);
     }
 
-    public void CalcularValorDeTodosPagamentos(List<Pagamento> pagamentos) {
+    public void calcularValorDeTodosPagamentos(List<Pagamento> pagamentos) {
         BigDecimal valorTotalPagamentos = pagamentos.stream()
                 .flatMap(p -> p.getProdutos().stream())
                 .map(Produto::getPreco)

@@ -1,19 +1,16 @@
-import jdk.jshell.spi.ExecutionControlProvider;
-import model.*;
+package test;
+
+import model.Assinatura;
+import model.Cliente;
+import model.Pagamento;
+import model.Produto;
 import service.AssinaturaService;
 import service.PagamentoService;
 
 import java.math.BigDecimal;
 import java.nio.file.Path;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -58,14 +55,14 @@ public class Main {
         System.out.println("3 - Soma dos valores dos produtos no primeiro pagamento (double): " +
                 pagamentos.get(0).calcularSomaDoValorDosProdutos());
 
-        pagamentoService.CalcularValorDeTodosPagamentos(pagamentos);
+        pagamentoService.calcularValorDeTodosPagamentos(pagamentos);
         pagamentoService.imprimirQuantidadeCadaProdutoVendido(pagamentos);
         pagamentoService.criarMapa(pagamentos);
         pagamentoService.identificarClienteGastouMais(pagamentos);
         pagamentoService.cacularValorFaturadoEmUmMes(pagamentos);
         assinaturaService.imprimirTempoEmMesesDeAssinatuvaAtiva(assinaturaJohn);
         assinaturaService.imprimirTempoDeAssinaturas(assinaturas);
-        assinaturaService.cacularValorPagoEmCadaAssinatura(assinaturas);
+        assinaturaService.calcularValorPagoEmCadaAssinatura(assinaturas);
     }
 
 }
